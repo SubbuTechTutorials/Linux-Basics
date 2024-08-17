@@ -1,0 +1,47 @@
+========================================================
+		LINUX BASICS-DAY-1
+========================================================
+--------------------------------------------------------
+Prompt Description:
+<username>@<hostname><current working directory>$
+Unprivileged - User Shell Prompt: $
+Privileged - Root Shell Prompt: #
+---------------------------------------------------------------------
+Basic Information
+---------------------------------------------------------------------
+hostname -Displays the system’s hostname.
+
+uname -Prints basic information about the operating system name
+
+hostnamectl --Provides system information, including the operating system version, kernel version
+
+whoami -Displays the currently logged-in user.
+
+who am i - Display only the line pointing to your current session
+
+id- Shows user ID (UID) and group ID (GID) of the current user or specified user.
+
+who - Shows users who is logged in and their terminal.
+
+w - Displays information about users currently logged in and their activities.
+
+last - Shows the last logins of users.
+
+uptime - Displays how long the system has been running, along with load averages.
+
+passwd --set the password
+---------------------------------------------------------------------
+Manuals or Help
+man
+help
+-------------------------------
+Navigation
+------------------
+pwd
+ls
+cd
+------------------
+Creating file/directory
+mkdir
+mkdir -p
+touch
