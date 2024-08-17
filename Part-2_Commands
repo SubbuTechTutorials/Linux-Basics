@@ -1,0 +1,57 @@
+============================================================
+Linux Basics_DAY-2: Working with Files and Directories
+============================================================
+1.Create: File/Directory
+------------------------------------------------------------
+Creation of files in different ways:
+------------------------------------------------------------
+We can use touch to create an empty file and mkdir to create a directory.
+Ex: touch <fine_name>
+EX: touch fileA.txt fileB.txt fileC.txt
+EX: touch file{1..5}.txt
+Ex: > <filename>      ('>' ==> redirection operator)
+Ex: cat > <filename> and press Ctrl+D to save. (cat==>Concatenates and displays files:File handling command.)
+Ex: echo "" > <filename>    (echo ==> Displays text on the terminal:Output command)
+Ex: printf "" > <filename>  (printf ==> Formats and prints output:Formatting and output command)
+--------------------------------------------------------------
+Creating files in different ways:
+mkdir -p Storage/local/user/documents
+touch ./Storage/local/user/userinfo.txt
+mkdir -p Storage/local/backups
+touch ./Storage/local/backups/logsinfo.txt
+--------------------------------------------------------------
+We can look at the whole structure after creating the parent directories with the tool tree.
+Ex: tree .
+Ex: tree -L 2
+Ex: tree -d
+---------------------------------------------------------------
+Real-time Scenarios:
+Creating a File with System Information:
+(Saving system uptime and load average to a file)
+uptime > /var/log/system_status.log
+
+Redirecting Command Output to Multiple Files:
+(Saving a list of active users and processes to separate files)
+who > /var/log/active_users.log; ps aux > /var/log/processes.log
+
+Redirecting the Output of a System Command:
+(Saving the list of installed packages to a file)
+rpm -qa > /var/log/installed_packages.log
+
+==============================================================
+Copy: 'cp' command in Linux is used to copy files and directories
+===============================================================
+Ex: cp file1.txt file2.txt
+Ex: cp ./Storage/local/backups/logsinfo.txt ./Storage/local/user/
+Ex: cp -r ./Storage/local/user/ ./Storage/local/backups/
+Ex: cp -u logsinfo.txt ./Storage/local/backups/logsinfo.txt
+============================================================
+Move: 'mv' command in Linux is used for moving or renaming files and directories.
+============================================================
+Syntax: mv <file/directory> <renamed file/directory>
+
+Ex: mv samplefile.txt filesample.txt
+Ex: mv /var/log/active_users.log ./Storage/local/user/
+
+
+
