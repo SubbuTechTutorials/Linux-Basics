@@ -1,0 +1,72 @@
+===========================================================
+     Linux Basics: Day-3: Find Files and Directories
+===========================================================
+It is crucial to be able to find the files and folders we need. 
+Once we have gained access to a Linux based system, it will be essential to find configuration files, scripts created by 
+users or the administrator, and other files and folders.
+We do not have to manually browse through every single folder and check when modified for the last time. 
+There are some tools we can use to make this work easier.
+--------------------------------------------------------------------
+1. which or whereis 
+This tool returns the path to the file or link that should be executed. 
+This allows us to determine if specific programs, like cURL, netcat, wget, python, gcc, are available on the operating system. 
+Ex: which python
+If the program we search for does not exist, no results will be displayed.
+--------------------------------------------------------------------
+2. find:
+
+The find command is used to search for files and directories within a specified directory hierarchy. 
+It's a powerful and flexible command that can search based on a wide range of criteria (e.g., name, type, size, permissions).
+ Syntax:
+ find <location> <options>
+ Ex-1: find workspace/ -name employees.txt
+ Ex-2: find workspace/ -name *.txt
+ Ex-3: find . -name employees.txt
+ EX-4: find . -type d -name users
+ EX-5: find . -type f -name "*.txt"
+ EX-6: find . -type f -size -10k
+ EX-7: find . -type f -size +100M
+ EX-8: find . -type f -empty
+ EX-9: find . -type d -empty
+ Exclude a specific directory from the search:
+ find . -path "./dir_to_exclude" -prune -o -name "filename" -print
+ Ex-10: find . -path "./projects" -prune -o -name listoffiles.txt -print
+ 
+ Change permissions on all .sh files:
+ find . -type f -name "*.sh" | xargs chmod +x
+ 
+ Find files created within the last 24 hours 
+ find . -type f -ctime -1
+ 
+ Find files modified within the last 1 hour:
+ find . -type f -mmin -60
+
+-------------------------------------------------------------------
+3. Locate:
+It will take much time to search through the whole system for our files and directories to perform many different searches. 
+The command locate offers us a quicker way to search through the system. 
+In contrast to the find command, locate works with a local database that contains all information about existing files and folders. 
+We can update this database with the following command.
+
+By default it is not availble in Linux, so we need install the mlocate package
+-------------------------------------------------
+sudo yum install mlocate -y
+sudo updatedb
+-------------------------------------------------
+If we now search for all files with the ".conf" extension, you will find that this search produces results much faster than using find.
+Ex: locate *.conf
+--------------------------------------------------------------------------------------------------------
+Real-Time vs. Database Search:
+
+which: Real-time, but only in PATH.
+find: Real-time across any directory hierarchy.
+locate: Database-based, so not always up-to-date with the most recent changes.
+---------------------------------------------------------------------------------------------------------
+Summary
+Use which to find out where an executable is located.
+Use find for detailed and real-time searches with a variety of options.
+Use locate for quick filename searches across the entire system.
+
+--------------------------------------------------------------------
+4. Other alternative ways to find or locate files or directories:
+Ex: tree -P "employees.txt" .
