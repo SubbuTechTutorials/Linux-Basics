@@ -52,6 +52,7 @@ Syntax: mv <file/directory> <renamed file/directory>
 
 Ex: mv samplefile.txt filesample.txt
 Ex: mv /var/log/active_users.log ./Storage/local/user/
-
+To move a file from current directory to one directory back
+Ex: mv <filename> ../  
 
 
