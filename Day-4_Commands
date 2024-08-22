@@ -1,0 +1,179 @@
+====================================================
+			Filter Content of files in Linux : Part-1
+====================================================
+1. cat: Displays or concatenates files.
+----------------------------------------------
+It can be used to create a file, display content of the file, copy the content of one file to another file, and more.
+ Syntax: cat <path/to/filename
+1.1: Basic Use of Cat: Displaying content of file.
+Ex: cat employees.txt
+1.2: Using Line Numbers for Easier Readability
+Ex: cat -n employees.txt
+1.3: Using Cat to Merge Files
+Ex: cat catsample.txt catsample2.txt
+Ex: cat catsample.txt catsample2.txt > mergedfile.txt
+1.4 Appending Content to an Existing File
+Ex: cat >> catsample2.txt
+1.5 Creating a New File with Content using "here document"
+Ex: "here document," which allows you to redirect multiple lines of input into a command or file.
+-------------------------------------------------------------------------------------------------
+cat > heredocfile.txt << EOF
+hello world!
+This is a new file
+created using cat command.
+EOF
+-------------------------------------------------------------------------------------------------
+1.6:View CPU Info in Linux
+cat /proc/cpuinfo
+--------------------------------------------------------------------------------------------------
+2. more: It is a command-line utility used for viewing the content of files in a paginated manner. 
+--------------------------------------------------------------------------------------------------
+Key Features:
+--------------------------------------------------------
+Pagination: Displays one screen of the file at a time.
+Interactive Commands: Allows you to navigate through the file using keyboard commands.
+Syntax:  more [options] </path/to/filename>
+Navigating with more:
+Spacebar: Scrolls down by one screen.
+Enter: Scrolls down by one line.
+b: Scrolls back by one screen.
+/search_term: Searches forward for search_term.
+n: Repeats the last search.
+q: Quits more and exits the pager.
+-----------------------------------------------------
+Ex: more examplemore.txt
+Example of how to use the -n option to view ten lines per page
+Ex: more -n 10 examplemore.txt
+
+Ex: more -h
+This will display a help screen with the list of available commands and their corresponding functions.
+
+For example, if you want to start viewing a file from line number 20, you can use the command:
+more +20 examplemore.txt
+
+Display Helpful Prompts
+more -d examplemore.txt
+
+Squeeze Blank Lines
+more -s examplemore.txt
+
+Clear Screen Before Displaying
+more -c examplemore.txt
+---------------------------------------------------------------------------------------------------
+3. less: It is used for viewing the contents of files or the output of other commands in a scrollable manner. 
+---------------------------------------------------------------------------------------------------
+It used for viewing the contents of files or the output of other commands in a scrollable manner. 
+It's similar to the more command but with additional features that make it more versatile and user-friendly.
+
+You can use the following shortcuts to navigate the document in the less command:
+----------------------------------------------------------------------------------
+Down Arrow, Enter, e, j: Moves forward by one line.
+Up Arrow, y, k: Moves backward by one line.
+Space bar, Page Down: Advances forward by one page.
+Page Up, b: Moves backward by one page.
+Right Arrow: Scrolls the view to the right.
+Left Arrow: Scrolls the view to the left.
+Home, g: Jumps to the beginning of the file.
+End, G: Jumps to the end of the file.
+/[string]: Searches forward for the specified string.
+?[string]: Searches backward for the specified string.
+n: Finds the next occurrence in a search.
+N: Finds the previous occurrence in a search.
+q: Exits the less command.
+----------------------------------------------------------------------------------
+Examplesof less command:
+----------------------------------------------------------------------------------
+Ex-1) less exampleless.txt
+Ex-2). Show Line Numbers
+less -N exampleless.txt
+
+Ex-3) Chop Long Lines
+less -S exampleless.txt
+
+Ex-4) Causes less to automatically exit the first time it reaches end of file.
+less -E exampleless.txt
+
+Ex-5) Pattern Search
+less -N -pVLSM exampleless.txt
+
+Ex-6)Keep Content On Screen After Exit
+less -X exampleless.txt
+
+Ex-7)Edit Files
+Although less is primarily for viewing files, it offers a handy shortcut to switch to editing mode.
+Press v while viewing a file in less to open it in the system’s default text editor. 
+Exiting the editor will bring you back to less command’s output.
+
+Ex-8)Access File Statistics
+less -M exampleless.txt
+----------------------------------------------------------------------------------
+Difference between more and less commands in Linux:
+Key Differences:
+  A)	Navigation:
+      •	more only allows forward navigation, whereas less allows both forward and backward navigation.
+      •	In more, you can only move forward one page or one line at a time, while less allows more fine-grained navigation.
+  B)	Features:
+      •	less has more features than more, including searching within the file, executing shell commands, and viewing compressed files.
+      •	more is simpler and more straightforward, suitable for quick file viewing tasks.
+  C)	Efficiency:
+      •	less is more efficient for viewing large files because it doesn't load the entire file into memory at once, unlike more.
+--------------------------------------------------------------------------------------------------------------
+4. head: prints lines at the top of the file; by default, it prints the first 10 lines of the specified files
+--------------------------------------------------------------------------------------------------------------
+Syntax:  head [option] file_name
+
+Ex: head exampleless.txt
+
+Display the First N Lines of a File:
+Ex: head -n 15 exampleless.txt
+
+Ex: cat exampleless.txt | head
+Ex: cat exampleless.txt | head -15
+
+Ex: Analyzing Command Output
+dmesg | head -n 20
+
+View Multiple Files:
+head -n 5 exampleless.txt catsample.txt
+
+Suppress File Name Headers:
+head -q -n 5 exampleless.txt catsample.txt
+--------------------------------------------------------------------------------------------------------------
+5. tail: prints lines at the bottom of the file; by default, it prints the last 10 lines of the specified files
+--------------------------------------------------------------------------------------------------------------
+Syntax:  tail [option] file_name
+
+Ex: tail examplemore.txt
+
+Display the last N Lines of a File:
+Ex: tail -n 15 examplemore.txt
+
+Ex: cat -n examplemore.txt | tail
+Ex: cat -n examplemore.txt | tail -15
+
+Ex: Analyzing Command Output
+dmesg | tail -n 20
+
+View Multiple Files:
+tail -n 5 exampleless.txt catsample.txt
+
+Suppress File Name Headers:
+tail -q -n 5 exampleless.txt catsample.txt
+
+Monitoring Log Files in Real-Time:
+Ex: tail -f /var/log/nginx/error.log
+Note:
+-f: Follows the file as it grows, displaying new lines as they are added in real-time 
+(commonly used for monitoring log files).
+--------------------------------------------------------------------------------------------------
+Combining both head and tail commands:
+--------------------------------------------------------------------------------------------------
+Combining the head and tail commands can be useful for various purposes, such as extracting 
+a specific range of lines from a file or excluding a certain number of lines from the beginning or end of a file. 
+Logic: If you need to display  x to y of lines from a file then 
+head -n y | tail (y-x)+1
+Ex:  Extract lines 10 to 15 from a file: 
+         x=10 y=15 then  it is  head -n 15 filename | tail (15-10)+1
+       
+	   head -n 15 exampleless.txt | tail -n 6
+-----------------------------------------------------------------------------------------------------
