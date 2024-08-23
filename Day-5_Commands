@@ -1,0 +1,185 @@
+=============================================================================================
+			                            Filter File Contents
+==============================================================================================
+------------------------------------------------------------------------------------------------------------------
+6. Sort: sorts the contents of the file based on various criteria such as alphabetical order, numerical order, 
+reverse order, and more.
+-----------------------------------------------------------------------------------------------------------------
+Syntax: sort [options] filename
+Common Options:
+-n: Sorts by numerical value.
+-r: Reverses the sort order.
+-k <field>: Sorts based on a specific field (column).
+-t <delimiter>: Specifies the delimiter used to separate fields.
+-u: Removes duplicate lines.
+-o <file>: Writes the output to a file.
+----------------------------------------------------
+Examples:
+---------------------------------------------------
+Ex-1: Sort a File Alphabetically
+sort alphabetex.txt
+Ex-2: Reverse Sorting
+sort -r alphabetex.txt
+Ex-3: Numerical Sorting
+sort numericex.txt  or sort -n numericex.txt
+Ex-4: sort -r numericex.txt
+Ex-5: Sort by Unique Values : 
+sort -u [filename]
+------------------------------
+cat >> alphabetex.txt
+AWS
+Jenkins
+Terraform
+----------------------------
+sort -u alphabetex.txt
+Ex-6: Sort by Specific Column
+sort -k[column number] [filename]
+cat empinfo.txt
+sort -k2 empinfo.txt
+Excluding Heading from the sort
+head -n 1 empinfo.txt && tail -n +2 empinfo.txt | sort -k3,3
+Ex-7: Sort by Month
+sort -M monthex.txt
+Ex-8: Sort the Human-Readable Units
+sort -h unitex.txt
+Ex-9: Ignoring Case While Sorting
+sort -f [filename]
+------------------------------
+cat >> alphabetex.txt
+JAVA
+MYSQL
+----------------------------
+sort -f alphabetex.txt
+Ex-10: Sort the Contents and Output to Another File
+sort alphabetex.txt -o sorted_alphabetex.txt
+Ex-11: Sort with a Custom Field Separator
+sort -t [custom field separator] [filename]
+---------------------------------------
+cat > csvfilex.txt << EOF
+AliceJohnson,Engineering,80000
+BobSmith,Sales,75000
+CharlieBrown,Marketing,65000
+DianaGarcia,HR,60000
+EthanLee,IT,90000
+EOF
+----------------------------------------
+Ex: sort -t, -k3 csvfilex.txt
+-----------------------------------------------------------------------------------------------------------
+7. grep: used to search for specific patterns within files or output. 
+It stands for "Global Regular Expression Print" 
+and is commonly used in various DevOps tasks for searching logs, filtering output, and analyzing data.
+-----------------------------------------------------------------------------------------------------------
+Syntax: grep [options] pattern [file...]
+grep --help
+------------------------------------------
+Commonly Used Options:
+-i: Ignore case differences in the pattern.
+-v: Invert the match, displaying lines that do not match the pattern.
+-r or -R: Recursively search directories.
+-l: List the filenames that contain the match, without showing the matching lines.
+-n: Show line numbers with output lines.
+-w: Match whole words only.
+-c: Count the number of matching lines.
+-e: Specify multiple patterns to search for.
+--------------------------------------------
+Example:
+--------------------------------------------
+Ex-1: Search for All ERROR Logs
+grep "ERROR" webapplog.txt
+
+Ex-2: Find All Entries Logged by jane.smith
+grep "jane.smith" webapplog.txt
+
+Ex-3: Count the Number of ERROR Logs
+grep -c "ERROR" webapplog.txt
+
+Ex-4: Search for Lines Containing Both ERROR and database
+grep "ERROR" webapplog.txt | grep "database"
+
+Ex-5: Exclude Lines Containing INFO
+grep -v "INFO" webapplog.txt
+
+Ex-6:Display Line Numbers for Matching Entries
+grep -n "ERROR" webapplog.txt
+
+Ex-7: Search for Entries from a Specific Time Range (e.g., 12:10 to 12:20)
+grep "2024-08-22 12:1[0-9]" webapplog.txt
+Matches lines with timestamps from 12:10 to 12:19.
+
+Ex-8: Case-Insensitive Search for error
+grep -i "error" webapplog.txt
+
+Ex-9: Search for Multiple Patterns (e.g., ERROR and WARNING)
+grep -E "ERROR|WARNING" webapplog.txt
+
+
+Ex-10: Search for a Specific IP Address (e.g., 192.168.1.10)
+grep "192.168.1.10" webapplog.txt
+
+Ex-11: Display Only the Matching Part of the Lines (e.g., Extract Usernames)
+grep -o "'[a-zA-Z0-9._-]\+'" webapplog.txt
+The -o option extracts and displays only the matching part of the line (in this case, usernames).
+
+Ex-12: Highlight Matching Strings in the Output
+grep --color=always "ERROR" webapplog.txt
+
+Ex-13: Search for Lines Ending with a Specific Word (e.g., successfully)
+grep "successfully$" webapplog.txt
+
+Ex-14: List Only the File Names with Matches (Useful with Multiple Files)
+grep -l "ERROR" webapplog.txt
+
+Ex-15: Get Lines Before the Match
+grep -B 2 "ERROR" webapplog.txt
+
+Ex-16: Get Lines After the Match
+grep -A 3 "ERROR" webapplog.txt
+grep -nA 3 "ERROR" webapplog.txt
+
+Ex-17: Get Lines Before and After the Match
+grep -C 2 "ERROR" webapplog.txt
+grep -nC 2 "ERROR" webapplog.txt
+
+Ex-18: Show 1 Line Before and 2 Lines After Each ERROR
+grep -B 1 -A 2 "ERROR" webapplog.txt
+
+Ex-19: Search All Directories for a String
+grep -r "ERROR"*          [For each line with pattern from all filenames]
+grep -l "ERROR" *         [For only filenames]
+grep -ic "ERROR" *        [For filenames with no of occurances]
+
+Ex-20: Use grep with Pipes
+You can use the following command to find out if a specific package is available on an RedHat machine.
+rpm -qa | grep "systemd"
+rpm -qa | grep "git"
+
+Ex-21: 
+ip addr
+ip addr | grep -B 4 ether
+Extract IPv4 Addresses from ip addr:
+ip addr | grep -oP '(?<=inet\s)\d+\.\d+\.\d+\.\d+'
+Extract IPv6 Addresses from ip addr:
+ip addr | grep -oP '(?<=inet6\s)[a-fA-F0-9:]+'
+-----------------------------------------------------------------------------------------
+8. wc: used to count the number of lines, words, characters, and bytes in files or input.
+-----------------------------------------------------------------------------------------
+SYNAT: wc [OPTION]... [FILE]...
+Common Options
+-l: Count the number of lines.
+-w: Count the number of words.
+-c: Count the number of bytes.
+-m: Count the number of characters.
+-L: Print the length of the longest line.
+-------------------------------------------------------
+Examples:
+Counting Lines in a File
+wc -l file.txt
+
+Counting Words in a File
+wc -w file.txt
+
+Counting Characters in a File
+wc -m file.txt
+
+Counting Bytes in a File
+wc -c file.txt
