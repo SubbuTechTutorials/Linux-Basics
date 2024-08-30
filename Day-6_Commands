@@ -1,0 +1,94 @@
+-------------------------------------------------------------------------------------------------------------------
+7. Cut
+------------------------------------------------------------------------------------------------------------------
+The cut command in Linux is a powerful tool for extracting specific sections from each line of a file or piped data. 
+It's commonly used in shell scripting and DevOps tasks to process logs, 
+configuration files, or command outputs where you need to parse and manipulate data.
+--------------------------------------------------------------------------------
+Syntax: cut [OPTION]... [FILE]...
+Common Options
+-f : Specifies the field(s) to extract. Fields are typically delimited by a tab or another delimiter (specified by -d).
+-d : Defines the delimiter used to separate fields in a line (e.g., -d "," for comma-separated values).
+-c : Cuts by character position (e.g., -c 1-5 to extract the first five characters of each line).
+-b : Cuts by byte position.
+=> -c: When working with text files or strings where you're interested in specific characters.
+=> -b: When working with binary data or when exact byte positions are important, especially in files with fixed-width records.
+---------------------------------------------------------
+Ex-1: cat /etc/passwd | grep -v "false\|nologin" | cut -d":" -f1
+EX-2: Example Jenkins Log File to get the Build ID
+grep "Build_ID:" jenkins.log | cut -d" " -f2
+Ex-3: cut -d: -f1 /etc/passwd
+Ex-4: cut -d " " -f 1 --complement Marketing_Dept_emp.txt
+Ex-5: cut -c 1-3 simpledata.txt
+-------------------------------------------------------------------------------------------------------------------
+8. Tr
+-------------------------------------------------------------------------------------------------------------------
+The tr command in Linux is used to translate or delete characters from standard input. 
+Syntax: tr [OPTION]... SET1 [SET2]
+---------------------------------------
+Common Options:
+-d : Delete characters specified in SET1.
+-s : Squeeze repeated characters in SET1 into a single character.
+-c : Complement the set of characters in SET1.
+---------------------------------------
+It's particularly useful for replacing or squeezing characters and works well in pipelines where you need to transform text.
+Another possibility to replace certain characters from a line with characters defined by us is the tool tr. 
+As the first option, we define which character we want to replace, and as a second option, 
+we define the character we want to replace it with.
+ 
+Ex-1: we replace the colon character with space.
+cat /etc/passwd | grep -v "false\|nologin" | tr ":" " "
+Ex-2: Translating Case in Logs
+In DevOps, you might need to normalize log entries by converting all text to lowercase for consistent processing.
+cat application.log | tr 'A-Z' 'a-z'
+cat application.log | tr WWW www
+cat application.log | tr [:upper:] [:lower:]
+Ex-3: Deleting Unwanted Characters
+If you have a log file with extra control characters that need to be cleaned up, you can delete them using tr.
+cat error.log | tr -d '\r'
+This removes carriage return characters (\r), which are common in files transferred between Windows and Unix systems.
+echo "Welcome to Subbu Tech Tutorials:" | tr -d 'e'
+echo "your Pin No is:7777" | tr -d [:digit:]
+Ex-4: Squeeze Repeated Characters: To reduce multiple spaces to a single space, you can use tr -s
+echo "This    is   a   test" | tr -s ' '
+echo "This    is   a   test" | tr -s ' ' '\t'
+Remove Newline Characters: cat application.log | tr -s ‘\n’ ‘ ‘
+Ex-5: Use with cut: You can combine tr with cut to first translate delimiters and then extract specific fields:
+cat data.txt | tr ':' ',' | cut -d ',' -f 1
+Ex-6: Complement Sets
+echo "your Pin is:7777 | tr -cd [:digit:]
+Ex-7: Remove Diacritics
+Diacritics are accented characters that can cause issues in processing text input. 
+cat application.log | tr “[=e=]” “e”
+-----------------------------------------------------------------------------------------------------------------
+9. Column
+-----------------------------------------------------------------------------------------------------------------
+Since search results can often have an unclear representation, the tool column is well suited to 
+display such results in tabular form using the "-t."
+The column command in Linux is used to format the output of text files or command outputs into neatly aligned columns. 
+This command is particularly useful in DevOps for improving the readability of logs, 
+configuration files, or any data that’s presented in a tabular format.
+
+Syntax: column [options] [file...]
+----------------------
+Common Options:
+-t: Create a table by determining the number of columns from the input and aligning the output into those columns.
+-s <separator>: Specify a delimiter other than whitespace for splitting columns (e.g., -s, for comma-separated values).
+-c <width>: Specify the maximum width of each line in the output.
+-n: Do not format lines that have different numbers of columns.
+------------------------
+Ex-1: cat /etc/passwd | grep -v "false\|nologin" | tr ":" " " | column -t
+
+Ex-2: Formatting Log Files
+cat /var/log/syslog | grep "ERROR" | column -t
+
+Ex-3: Parsing Configuration Files
+cat config.cfg | column -t -s=
+If you have a configuration file where key-value pairs are separated by a specific character (like =), 
+you can use the column command to format it.
+
+Ex-4:Handling CSV Files
+cat metrics.csv | column -t -s,
+DevOps often involves dealing with CSV files, such as when exporting monitoring metrics or user data. 
+The column command can make these easier to view in the terminal.
+---------------------------------------------------------------------------------------------------------------------------------
